@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-fefefe: #fefefe;
+  --color-295699: #295699;
+  --color-070707: #070707;
+  --color-0044ab: #0044ab;
+  --color-003585: #003585;
+  --color--77777: #777777;
+}
+
+body {
+  background-color: var(--color-fefefe);
+  font-family: "Montserrat", sans-serif;
+  font-family: "Poppins", sans-serif;
+}
+.gap-30 {
+  gap: 30px;
+}
+
+/* header part start */
+.header-section .header-title {
+  font-size: 20px;
+  color: var(--color-295699);
+}
+
+.header-link-1 {
+  margin-right: 10px;
+}
+/* End of header part */
+/* body */
+.body-section .body-p1 {
+  margin-top: 50px;
+}
+
+.body-p1 h4 {
+  font-size: 35px;
+}
+.body-intro-text-1,
+.body-intro-text-2 {
+  color: var(--color-0044ab);
+}
+.body-intro-text-3 {
+  color: var(--color-070707);
+}
+.body-p2 p{
+    color: var(--color--77777);
+}
+.inlet-button{
+margin-right: 25px;;
+}
+.body-p5 .temp,
+.body-p5 .turbidity{
+    width: 28%;
+    border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+.body-p5 h3{
+    color:var(--color-295699);
+}
+
+.table tbody{
+  color: var(--color--77777);
+}
+
+
+@media screen and (max-width: 768px) {
+  .inlet-button{
+    margin-bottom: 20px;
+  }
+}
+  
