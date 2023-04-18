@@ -389,29 +389,47 @@ function updatedata() {
 
 setInterval(updatedata, 1000);
 
-// Data to be filled in the table
-var data = [
-  ["1", "22.5", "10", "20"],
-  ["2", "21.0", "12", "25"],
-  ["3", "23.5", "15", "30"],
-  ["4", "22.0", "11", "22"],
-];
-
 // Get the table element
-var table = document.getElementById("myTable");
+var tableBody = document.getElementById("t-body");
 
 
 
-//buttons
+function updateTable() {
+  fetch("/data")
+    .then((response) => response.json())
+    .then((data) => {
+      // Create a new table row element
+      const tr = document.createElement("tr");
 
-button_1.addEventListener("click", function (event) {
-  console.log(event)
-  event.redirected = true;
-  fetch("/dataPage", { method: "GET" })
-  .then((response) => {
-    console.log(response);
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-});
+      // Add a cell for each data property
+      const td1 = document.createElement("td");
+      td1.innerText = data.time;
+      const td2 = document.createElement("td");
+      td2.innerHTML = data.temperature[data.temperature.length - 1] + "&deg;C";
+      const td3 = document.createElement("td");
+      td3.innerText = data.turbidity[data.turbidity.length - 1];
+      const td4 = document.createElement("td");
+      td4.innerText = data.waterLevel;
+
+      // Add the cells to the row
+      tr.appendChild(td1);
+      tr.appendChild(td2);
+      tr.appendChild(td3);
+      tr.appendChild(td4);
+
+      // Add the new row to the top of the table body
+      tableBody.insertBefore(tr, tableBody.firstChild);
+
+      // If there are more than f rows in the table body, remove the last row
+      while (tableBody.children.length > 4) {
+        tableBody.removeChild(tableBody.lastChild);
+      }
+    })
+    .catch((error) => console.error(error));
+}
+
+// Update the charts every 2 seconds
+
+setInterval(updateTable, 60000);
+
+

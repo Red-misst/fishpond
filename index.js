@@ -59,7 +59,7 @@ ws.on("message", function (data) {
   temperatureData.push(dataObject.temperature);
   turbidityData.push(dataObject.turbidity);
 
- dbPush(_temperature);
+
 });
 
 // Route to serve JSON data
