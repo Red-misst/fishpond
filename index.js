@@ -1,10 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const dbConnect = require("./config/dbConnect");
 const WebSocket = require("ws");
+const {dbPush, dbCreate} = require("./config/dbPush");
+const dotenv = require("dotenv").config();
 
-
-const ws = new WebSocket("ws://192.168.137.251:81/");
+const ws = new WebSocket("ws://192.168.0.103:81/");
 
 const app = express();
 const port = 4000;
@@ -14,7 +16,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-
+dbConnect();
 // Store data in variables
 let temperatureData = [];
 let turbidityData = [];
@@ -22,8 +24,8 @@ let _temperature;
 let _turbidity;
 let waterLevel;
 let pumpActivated;
-let pumpInActivated;
-let pumpOutActivated;
+
+let turbidityId = process.env.TURBIDITY_ID;
 //variables to be used in app
 let time = 0;
 setInterval(() => {
@@ -51,20 +53,13 @@ ws.on("message", function (data) {
   pumpActivated = dataObject.pumpActivated;
   pumpInActivated = dataObject.pumpInActivated;
   pumpOutActivated = dataObject.pumpOutActivated;
-
-  
-
-  const wLevel = dataObject.waterLevel;
-
-  if (wLevel < 200) {
-    waterLevel = "Low";
-  } else {
-    waterLevel = "Optimum"
-  }
+  waterLevel = dataObject.waterLevel;
 
   // Add data to arrays
   temperatureData.push(dataObject.temperature);
   turbidityData.push(dataObject.turbidity);
+
+ dbPush(_temperature);
 });
 
 // Route to serve JSON data
@@ -89,6 +84,9 @@ app.get("/", (req, res) => {
   });
 });
 
+app.get("/dataPage", (req, res) => {
+  res.render("dataPage");
+});
 // Activate inlet pump route
 app.post("/activate-inlet", (req, res) => {
   // Send message to ESP8266 to activate pump
@@ -116,8 +114,6 @@ app.post("/deactivate-outlet", (req, res) => {
   ws.send(JSON.stringify({ action: "deactivateOutlet" }));
   res.send("Pump activated");
 });
-
-
 
 // Start server
 app.listen(port, () => {

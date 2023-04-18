@@ -2,8 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -15,167 +18,137 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600&family=Poppins:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <title>Fishpond</title>
+    <title>Faqua</title>
   </head>
-
   <body>
-    <header class="container-xl py-2 header-section">
-      <div class="row">
-        <div class="col-12 d-flex justify-content-between mt-4">
-          <div class="header-title-container mt-2">
-            <h1 class="header-title">Aqua</h1>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+      <a href="#" class="brand"><i class="bx bxs-smile icon"></i>Faqua</a>
+      <ul class="side-menu">
+        <li>
+          <a href="#" class="active"
+            ><i class="bx bxs-dashboard icon"></i> Dashboard</a
+          >
+        </li>
+        <li class="divider" data-text="main">Main</li>
+        <li>
+          <a id="charts_link"><i class="bx bxs-chart icon"></i> Charts</a>
+        </li>
+      </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- NAVBAR -->
+    <section id="content">
+      <!-- NAVBAR -->
+      <nav>
+        <i class="bx bx-menu toggle-sidebar"></i>
+        <form action="#">
+          <div class="form-group">
+            <input type="text" placeholder="Search..." />
+            <i class="bx bx-search icon"></i>
           </div>
-          <div class="header-profile">
-            <i class="uil uil-user fs-3"></i>
+        </form>
+        <a href="#" class="nav-link">
+          <i class="bx bxs-bell icon"></i>
+        </a>
+        <span class="divider"></span>
+        <div class="profile">
+          <img
+            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            alt=""
+          />
+          <ul class="profile-link">
+            <li>
+              <a href="#"><i class="bx bxs-user-circle icon"></i> Profile</a>
+            </li>
+            <li>
+              <a href="#"><i class="bx bxs-cog"></i> Settings</a>
+            </li>
+            <li>
+              <a href="#"><i class="bx bxs-log-out-circle"></i> Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- NAVBAR -->
+
+      <!-- MAIN -->
+      <main>
+        <h1 class="title">Dashboard</h1>
+        <ul class="breadcrumbs">
+          <li><a href="#">Home</a></li>
+          <li class="divider">/</li>
+          <li><a href="#" class="active">Dashboard</a></li>
+        </ul>
+        <div class="info-data">
+          <div class="card">
+            <div class="head">
+              <div>
+                <h2 id="live-temp">--&deg;C</h2>
+                <p>Temperature</p>
+              </div>
+              <span class="optimumLabel" id="temp-1">Optimum</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="head">
+              <div>
+                <h2 id="live-turb">--</h2>
+                <p>Turbidity</p>
+              </div>
+              <span class="optimumLabel" id="turb-1">Optimum</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="head">
+              <div>
+                <h2 id="live-lvl">--</h2>
+                <p>Water Level</p>
+              </div>
+              <span class="optimumLabel" id="water-lvl-1">Optimum</span>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
-    <div class="container-xl py-3 body-1-section">
-      <div class="row">
-        <div class="col-md-6 mx-auto body-p1 mb-2 mt-2">
-          <h4 class="body-intro-text-1">Hello</h4>
-          <h4 class="body-intro-text-2">Angela,</h4>
-          <h4 class="body-intro-text-3">Good morning</h4>
+        <div class="data">
+          <div class="content-data">
+            <div class="head">
+              <h3>Data graphs</h3>
+            </div>
+            <div class="chart">
+              <canvas id="tempChart"></canvas>
+            </div>
+          </div>
+          <div class="content-data">
+            <div class="head">
+              <h3>Data graphs</h3>
+            </div>
+            <div class="chart">
+              <canvas id="turbChart"></canvas>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 mx-auto mb-2 body-p2">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor,
-            nostrum vitae cum asperiores deleniti provident sed eveniet magnam.
-          </p>
-        </div>
-      </div>
-      <div class="row mb-2">
-        <div class="col-md-6 mx-auto d-flex">
-          <div class=" mb-sm-2 w-auto m-0 p-0">
-            <button
-              id="pumpIn"
-              class="btn btn-lg btn-outline-primary pump-btn inlet-button "
-            >
-              Activate inlet pump
+        <div class="info-data">
+          <div class="card">
+            <button class="btn btn-lg btn-outline-primary" id="pumpIn">
+              Activate intlet pump
             </button>
           </div>
-
-          <div class=" mb-sm-2 w-auto m-0 p-0">
-            <button
-              id="pumpOut"
-              class="btn btn-lg btn-outline-primary pump-btn outlet-button "
-            >
+          <div class="card">
+            <button class="btn btn-lg btn-outline-primary" id="pumpOut">
               Activate outlet pump
             </button>
           </div>
         </div>
-       
-      </div>
-      <div class="row">
-        <div class="col-md-6 mx-auto mb-3 body-p3">
-          <button
-            id="report"
-            class="btn btn-lg btn-outline-secondary pump-btn mb-2 w-100"
-          >
-            Historical data
-          </button>
-        </div>
-      </div>
-      <div class="row">
-        <div
-          class="col-md-5 body-p4 mx-auto mt-4 mb-3 d-flex justify-content-center"
-        >
-          <h3>Fishpond Metrics</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div
-          class="col-md-8 body-p5 mx-auto d-flex flex-row justify-content-between"
-        >
-          <div class="temp">
-            <h5 class="text-secondary mx-md-4">&nbsp;&nbsp;Temp</h5>
-            <h3 class="mx-4" id="live-temp">--&deg;C</h3>
-          </div>
-          <div class="turbidity">
-            <h5 class="text-secondary">Turbidity</h5>
-            <h3 class="mx-4" id="live-turb">--</h3>
-          </div>
-          <div class="water-lvl justify-content-center align-items-center">
-            <h5 class="text-secondary">Water level</h5>
-            <h3 class="mx-4" id="live-lvl">--</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container-xl py-3 body-2-section">
-      <div class="row mx-md-3 gap-1 mt-2">
-        <div class="col-md-5 mx-sm-auto graphs">
-          <canvas id="temperatureChart"></canvas>
-        </div>
-        <div class="col-md-5 mx-auto">
-          <canvas id="turbidityChart"></canvas>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-8 mx-auto">
-          <table class="table mt-2" style="table-layout: fixed">
-            <thead>
-              <tr>
-                <th scope="col">Time</th>
-                <th scope="col">Temp</th>
-                <th scope="col">Turbidity</th>
-                <th scope="col">water level</th>
-              </tr>
-            </thead>
-            <tbody id="t-body">
-              <tr>
-                <td><%=time %></td>
-                <td><%=temperature %>&deg;C</td>
-                <td><%=turbidity %></td>
-                <td><%=waterLevel %></td>
-              </tr>
-              <tr>
-                <td>--</td>
-                <td>--</td>
-                <td>--</td>
-                <td>--</td>
-              </tr>
-              <tr>
-                <td>--</td>
-                <td>--</td>
-                <td>--</td>
-                <td>--</td>
-              </tr>
-              <tr>
-                <td>--</td>
-                <td>--</td>
-                <td>--</td>
-                <td>--</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    <footer class="container-xl py-2 footer-section">
-      <div class="row">
-        <div class="col-12 align-items-center d-flex justify-content-center">
-          <p class="fs-5 text-dark mb-0 text-primary">&copy;Angela</p>
-        </div>
-      </div>
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+      </main>
+      <!-- MAIN -->
+    </section>
+    <!-- NAVBAR -->
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="/script.js"></script>
   </body>
 </html>

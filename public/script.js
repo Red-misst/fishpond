@@ -1,20 +1,161 @@
-//update live data on the  page
+// SIDEBAR DROPDOWN
+const allDropdown = document.querySelectorAll("#sidebar .side-dropdown");
+const sidebar = document.getElementById("sidebar");
+
+allDropdown.forEach((item) => {
+  const a = item.parentElement.querySelector("a:first-child");
+  a.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    if (!this.classList.contains("active")) {
+      allDropdown.forEach((i) => {
+        const aLink = i.parentElement.querySelector("a:first-child");
+
+        aLink.classList.remove("active");
+        i.classList.remove("show");
+      });
+    }
+
+    this.classList.toggle("active");
+    item.classList.toggle("show");
+  });
+});
+
+// SIDEBAR COLLAPSE
+const toggleSidebar = document.querySelector("nav .toggle-sidebar");
+const allSideDivider = document.querySelectorAll("#sidebar .divider");
+
+if (sidebar.classList.contains("hide")) {
+  allSideDivider.forEach((item) => {
+    item.textContent = "-";
+  });
+  allDropdown.forEach((item) => {
+    const a = item.parentElement.querySelector("a:first-child");
+    a.classList.remove("active");
+    item.classList.remove("show");
+  });
+} else {
+  allSideDivider.forEach((item) => {
+    item.textContent = item.dataset.text;
+  });
+}
+
+toggleSidebar.addEventListener("click", function () {
+  sidebar.classList.toggle("hide");
+
+  if (sidebar.classList.contains("hide")) {
+    allSideDivider.forEach((item) => {
+      item.textContent = "-";
+    });
+
+    allDropdown.forEach((item) => {
+      const a = item.parentElement.querySelector("a:first-child");
+      a.classList.remove("active");
+      item.classList.remove("show");
+    });
+  } else {
+    allSideDivider.forEach((item) => {
+      item.textContent = item.dataset.text;
+    });
+  }
+});
+
+sidebar.addEventListener("mouseleave", function () {
+  if (this.classList.contains("hide")) {
+    allDropdown.forEach((item) => {
+      const a = item.parentElement.querySelector("a:first-child");
+      a.classList.remove("active");
+      item.classList.remove("show");
+    });
+    allSideDivider.forEach((item) => {
+      item.textContent = "-";
+    });
+  }
+});
+
+sidebar.addEventListener("mouseenter", function () {
+  if (this.classList.contains("hide")) {
+    allDropdown.forEach((item) => {
+      const a = item.parentElement.querySelector("a:first-child");
+      a.classList.remove("active");
+      item.classList.remove("show");
+    });
+    allSideDivider.forEach((item) => {
+      item.textContent = item.dataset.text;
+    });
+  }
+});
+
+// PROFILE DROPDOWN
+const profile = document.querySelector("nav .profile");
+const imgProfile = profile.querySelector("img");
+const dropdownProfile = profile.querySelector(".profile-link");
+
+imgProfile.addEventListener("click", function () {
+  dropdownProfile.classList.toggle("show");
+});
+
+// MENU
+const allMenu = document.querySelectorAll("main .content-data .head .menu");
+
+allMenu.forEach((item) => {
+  const icon = item.querySelector(".icon");
+  const menuLink = item.querySelector(".menu-link");
+
+  icon.addEventListener("click", function () {
+    menuLink.classList.toggle("show");
+  });
+});
+
+window.addEventListener("click", function (e) {
+  if (e.target !== imgProfile) {
+    if (e.target !== dropdownProfile) {
+      if (dropdownProfile.classList.contains("show")) {
+        dropdownProfile.classList.remove("show");
+      }
+    }
+  }
+
+  allMenu.forEach((item) => {
+    const icon = item.querySelector(".icon");
+    const menuLink = item.querySelector(".menu-link");
+
+    if (e.target !== icon) {
+      if (e.target !== menuLink) {
+        if (menuLink.classList.contains("show")) {
+          menuLink.classList.remove("show");
+        }
+      }
+    }
+  });
+});
+
+// PROGRESSBAR
+const allProgress = document.querySelectorAll("main .card .progress");
+
+allProgress.forEach((item) => {
+  item.style.setProperty("--value", item.dataset.value);
+});
+
+// //update live data on the  page
 const temp = document.getElementById("live-temp");
 const turb = document.getElementById("live-turb");
 const water_lvl = document.getElementById("live-lvl");
-const tableBody = document.getElementById("t-body");
+const temp_1 = document.getElementById("temp-1");
+const turb_1 = document.getElementById("turb-1");
+const water_lvl_1 = document.getElementById("water-lvl-1");
 const pumpInButton = document.getElementById("pumpIn");
 const pumpOutButton = document.getElementById("pumpOut");
 const downloadData = document.getElementById("report");
-
+const button_1 = document.getElementById("charts_link");
 // handle the pump buttons click
 //pump in button
 pumpInButton.addEventListener("click", (event) => {
   console.log(event);
   if (event.target.innerText == "Activate intlet pump") {
-    if( pumpOutButton.innerText == "Deactivate outlet pump"){
+    if (pumpOutButton.innerText == "Deactivate outlet pump") {
       pumpOutButton.innerText = "Activate outlet pump";
-      fetch("/deactivate-outlet",{method: "POST"})
+      fetch("/deactivate-outlet", { method: "POST" })
         .then((response) => {
           console.log(response);
         })
@@ -23,7 +164,7 @@ pumpInButton.addEventListener("click", (event) => {
         });
     }
     pumpInButton.innerText = "Deactivate inlet pump";
-    fetch("/activate-inlet",{method: "POST"})
+    fetch("/activate-inlet", { method: "POST" })
       .then((response) => {
         console.log(response);
       })
@@ -32,7 +173,7 @@ pumpInButton.addEventListener("click", (event) => {
       });
   } else {
     pumpInButton.innerText = "Activate intlet pump";
-    fetch("/deactivate-inlet",{method: "POST"})
+    fetch("/deactivate-inlet", { method: "POST" })
       .then((response) => {
         console.log(response);
       })
@@ -46,18 +187,18 @@ pumpInButton.addEventListener("click", (event) => {
 pumpOutButton.addEventListener("click", (event) => {
   console.log(event);
   if (event.target.innerText == "Activate outlet pump") {
-    if( pumpInButton.innerText == "Deactivate inlet pump"){
+    if (pumpInButton.innerText == "Deactivate inlet pump") {
       pumpInButton.innerText = "Activate inlet pump";
-      fetch("/deactivate-inlet",{method: "POST"})
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      fetch("/deactivate-inlet", { method: "POST" })
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
     pumpOutButton.innerText = "Deactivate outlet pump";
-    fetch("/activate-outlet",{method: "POST"})
+    fetch("/activate-outlet", { method: "POST" })
       .then((response) => {
         console.log(response);
       })
@@ -66,7 +207,7 @@ pumpOutButton.addEventListener("click", (event) => {
       });
   } else {
     pumpOutButton.innerText = "Activate outlet pump";
-    fetch("/deactivate-outlet",{method: "POST"})
+    fetch("/deactivate-outlet", { method: "POST" })
       .then((response) => {
         console.log(response);
       })
@@ -76,152 +217,169 @@ pumpOutButton.addEventListener("click", (event) => {
   }
 });
 
-// //automatically update the button
-// setInterval(() => {
-//   fetch("/data", {
-//     method: "POST",
-//   })
-//     .then((response) => {
-//       console.log(response);
-//     })
-//     .then((data) => {
-//       var pumpActivated = data.pumpActivated;
-//       var currentTxt = pumpInButton.innerText;
-//       if (!pumpActivated && currentTxt == "Deactivate pump") {
-//         pumpButton.innerText = "Deactivate pump";
-//       } else if (pumpActivated && currentTxt == "Activate pump") {
-//         pumpButton.innerText = "Deactivate pump";
-//       }
-//     })
-//     .catch((error) => {
-//       console.error(error);
-//     });
-// }, 1000);
-// graph part
-const temperatureChartCtx = document
-  .getElementById("temperatureChart")
-  .getContext("2d");
-const temperatureChart = new Chart(temperatureChartCtx, {
+// get canvas element
+const turbidityCanvas = document.getElementById("turbChart").getContext("2d");
+const tempCanvas = document.getElementById("tempChart").getContext("2d");
+
+// initialize temp chart options
+const tempChartOptions = {
   type: "line",
+  height: 800,
   data: {
     labels: [],
     datasets: [
       {
-        label: "Temperature (°C)",
+        label: "Temperature(C)",
         data: [],
+        borderColor: "red",
         fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
       },
     ],
   },
   options: {
     responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "Temperature",
+      },
+    },
     scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Time",
+        },
+      },
       y: {
         beginAtZero: false,
+        title: {
+          display: true,
+          text: "Value",
+        },
       },
     },
   },
-});
+};
 
-const turbidityChartCtx = document
-  .getElementById("turbidityChart")
-  .getContext("2d");
-const turbidityChart = new Chart(turbidityChartCtx, {
+// initialize Turbiditychart options
+const turbidityChartOptions = {
   type: "line",
   data: {
     labels: [],
     datasets: [
       {
-        label: "Turbidity (NTU)",
+        label: "Turbidity(NTU)",
         data: [],
+        borderColor: "blue",
         fill: false,
-        borderColor: "rgb(75, 192, 192)",
-        tension: 0.1,
       },
     ],
   },
   options: {
     responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: "Turbidity",
+      },
+    },
     scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Time",
+        },
+      },
       y: {
         beginAtZero: false,
+        title: {
+          display: true,
+          text: "Value",
+        },
       },
     },
   },
-});
+};
 
-//Updates charts and the readings and the button text
+// initialize chart
+const chartTurb = new Chart(turbidityCanvas, turbidityChartOptions);
+const chartTemp = new Chart(tempCanvas, tempChartOptions);
+
+// update chart data from server every 4 seconds
 function updateCharts() {
   fetch("/data")
     .then((response) => response.json())
     .then((data) => {
-      //extracts the readings
-      var temp_live = data.temperature[data.temperature.length - 1];
-      var turbidity_live = data.turbidity[data.turbidity.length - 1];
-      var water_lvl_live = data.waterLevel;
+      // add new data to chart
 
-      // Add the latest data to the chart datasets
-      temperatureChart.data.labels.push(data.time);
-      temperatureChart.data.datasets[0].data.push(
+      chartTemp.data.datasets[0].data.push(
         data.temperature[data.temperature.length - 1]
       );
-      turbidityChart.data.labels.push(data.time);
-      turbidityChart.data.datasets[0].data.push(
+      chartTurb.data.datasets[0].data.push(
         data.turbidity[data.turbidity.length - 1]
       );
+      chartTemp.data.labels.push(data.time);
+      chartTurb.data.labels.push(data.time);
 
-      // Remove the oldest data from the chart datasets if they exceed 20 points
-      if (temperatureChart.data.labels.length > 20) {
-        temperatureChart.data.labels.shift();
-        temperatureChart.data.datasets[0].data.shift();
-        turbidityChart.data.labels.shift();
-        turbidityChart.data.datasets[0].data.shift();
+      if (chartTemp.data.datasets[0].data.length > 20) {
+        chartTemp.data.datasets[0].data.shift();
+        chartTurb.data.datasets[0].data.shift();
+        chartTemp.data.labels.shift();
+        chartTurb.data.labels.shift();
       }
-
-      // Update the charts
-      temperatureChart.update();
-      turbidityChart.update();
-
-      //update the data
-      water_lvl.innerHTML = water_lvl_live;
-      temp.innerHTML = temp_live + "&deg;C";
-      turb.innerHTML = turbidity_live;
+      // update chart
+      chartTemp.update();
+      chartTurb.update();
     })
     .catch((error) => console.error(error));
 }
+
+// update chart every 4 seconds
 setInterval(updateCharts, 4000);
 
-function updateTable() {
+function updatedata() {
   fetch("/data")
     .then((response) => response.json())
     .then((data) => {
-      // Create a new table row element
-      const tr = document.createElement("tr");
+      const temp_data = data.temperature[data.temperature.length - 1];
+      temp.innerText = temp_data;
+      const turb_data = data.turbidity[data.turbidity.length - 1];
+      turb.innerText = turb_data;
+      const water_lvl_data = data.waterLevel;
+      water_lvl.innerText = water_lvl_data;
 
-      // Add a cell for each data property
-      const td1 = document.createElement("td");
-      td1.innerText = data.time;
-      const td2 = document.createElement("td");
-      td2.innerHTML = data.temperature[data.temperature.length - 1] + "&deg;C";
-      const td3 = document.createElement("td");
-      td3.innerText = data.turbidity[data.turbidity.length - 1];
-      const td4 = document.createElement("td");
-      td4.innerText = data.waterLevel;
+      if (temp_data < 32 && temp_data > 24) {
+        temp_1.innerText = "optimum";
+        temp_1.style.backgroundColor = "#E3FFCB";
+        temp_1.style.color = "#81D43A";
+      } else {
+        temp_1.innerText = "Suboptimal";
+        temp_1.style.backgroundColor = "#FFD9E0";
+        temp_1.style.color = "#FC3B56";
+      }
 
-      // Add the cells to the row
-      tr.appendChild(td1);
-      tr.appendChild(td2);
-      tr.appendChild(td3);
-      tr.appendChild(td4);
-
-      // Add the new row to the top of the table body
-      tableBody.insertBefore(tr, tableBody.firstChild);
-
-      // If there are more than f rows in the table body, remove the last row
-      while (tableBody.children.length > 4) {
-        tableBody.removeChild(tableBody.lastChild);
+      if (turb_data < 25) {
+        turb_1.innerText = "optimum";
+        turb_1.style.backgroundColor = "#E3FFCB";
+        turb_1.style.color = "#81D43A";
+      } else {
+        turb_1.innerText = "Suboptimal";
+        turb_1.style.backgroundColor = "#FFD9E0";
+        turb_1.style.color = "#FC3B56";
+      }
+      if (water_lvl_data > 370) {
+        water_lvl_1.innerText = "Overflow";
+        water_lvl_1.style.backgroundColor = "#f3f7062c";
+        water_lvl_1.style.color = "#ffee00";
+      } else if (water_lvl_data > 200 && water_lvl_data < 370) {
+        water_lvl_1.innerText = "optimum";
+        water_lvl_1.style.backgroundColor = "#E3FFCB";
+        water_lvl_1.style.color = "#81D43A";
+      } else if (water_lvl_data < 200) {
+        water_lvl_1.innerText = "Low";
+        water_lvl_1.style.backgroundColor = "#FFD9E0";
+        water_lvl_1.style.color = "#FC3B56";
       }
     })
     .catch((error) => console.error(error));
@@ -229,4 +387,31 @@ function updateTable() {
 
 // Update the charts every 2 seconds
 
-setInterval(updateTable, 60000);
+setInterval(updatedata, 1000);
+
+// Data to be filled in the table
+var data = [
+  ["1", "22.5", "10", "20"],
+  ["2", "21.0", "12", "25"],
+  ["3", "23.5", "15", "30"],
+  ["4", "22.0", "11", "22"],
+];
+
+// Get the table element
+var table = document.getElementById("myTable");
+
+
+
+//buttons
+
+button_1.addEventListener("click", function (event) {
+  console.log(event)
+  event.redirected = true;
+  fetch("/dataPage", { method: "GET" })
+  .then((response) => {
+    console.log(response);
+  })
+  .catch((error) => {
+    console.error(error);
+  });
+});

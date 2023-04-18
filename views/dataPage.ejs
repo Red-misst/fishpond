@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <title>Faqua</title>
+  </head>
+  <body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+      <a href="#" class="brand"><i class="bx bxs-smile icon"></i>Faqua</a>
+      <ul class="side-menu">
+        <li>
+          <a href="#" class="active"
+            ><i class="bx bxs-dashboard icon"></i> Dashboard</a
+          >
+        </li>
+        <li class="divider" data-text="main">Main</li>
+        <li>
+          <a href="#"><i class="bx bxs-chart icon"></i> Charts</a>
+        </li>
+      </ul>
+    </section>
+    <!-- SIDEBAR -->
+
+    <!-- NAVBAR -->
+    <section id="content">
+      <!-- NAVBAR -->
+      <nav>
+        <i class="bx bx-menu toggle-sidebar"></i>
+        <form action="#">
+          <div class="form-group">
+            <input type="text" placeholder="Search..." />
+            <i class="bx bx-search icon"></i>
+          </div>
+        </form>
+        <a href="#" class="nav-link">
+          <i class="bx bxs-bell icon"></i>
+        </a>
+        <span class="divider"></span>
+        <div class="profile">
+          <img
+            src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            alt=""
+          />
+          <ul class="profile-link">
+            <li>
+              <a href="#"><i class="bx bxs-user-circle icon"></i> Profile</a>
+            </li>
+            <li>
+              <a href="#"><i class="bx bxs-cog"></i> Settings</a>
+            </li>
+            <li>
+              <a href="#"><i class="bx bxs-log-out-circle"></i> Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- NAVBAR -->
+
+      <!-- MAIN -->
+      <main>
+        <h1 class="title">Data Page</h1>
+        <ul class="breadcrumbs">
+          <li><a href="#">Home</a></li>
+          <li class="divider">/</li>
+          <li><a href="#" class="active">Dashboard</a></li>
+        </ul>
+        <h2>Section title</h2>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm myTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Temperature</th>
+                <th>Turbidity</th>
+                <th>Water Level</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </main>
+      <!-- MAIN -->
+    </section>
+    <!-- NAVBAR -->
+
+    <script src="/script.js"></script>
+  </body>
+</html>
